@@ -1,2 +1,4 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_multidays_profit_loss_wizard_user,multidays.profit.loss.wizard.user,model_multidays_profit_loss_wizard,base.group_user,1,1,1,1
+access_credit_sale_report_wizard_user,credit.sale.report.wizard.user,model_credit_sale_report_wizard,base.group_user,1,1,1,1
+access_barcode_report_wizard_user,barcode.report.wizard.user,model_barcode_report_wizard,base.group_user,1,1,1,1

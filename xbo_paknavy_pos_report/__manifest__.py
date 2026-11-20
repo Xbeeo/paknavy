@@ -21,7 +21,10 @@
         'report/multidays_profit_loss_template.xml',
         'report/pos_profit_loss_report_template.xml',
         'report/report_action.xml',
+        'report/credit_sale_report.xml',
         'wizards/multidays_profit_loss_wizard.xml',
+        'wizards/credit_sale_report_views.xml',
+        'wizards/barcode_report_wizard_views.xml',
         # 'wizards/pos_profit_loss_wizard_views.xml',
     ],
 

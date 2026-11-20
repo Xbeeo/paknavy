@@ -36,7 +36,7 @@
 <!--        <record id="action_pos_profit_loss_report" model="ir.actions.report">-->
 <!--            <field name="name">POS Profit &amp; Loss</field>-->
 <!--            <field name="model">pos.order</field>-->
-<!--            <field name="report_type">qweb-pdf</field>-->
+<!--            <field name="report_type">qweb-pdf</field>-->https://files.slack.com/files-pri/T05CNDN141X-F0CKDMRRSJ1/image.png
 <!--            <field name="report_name">xbo_paknavy_pos_report.report_pos_profit_loss</field>-->
 <!--            <field name="report_file">xbo_paknavy_pos_report.report_pos_profit_loss</field>-->
 <!--            <field name="binding_model_id" ref="point_of_sale.model_pos_order"/>-->

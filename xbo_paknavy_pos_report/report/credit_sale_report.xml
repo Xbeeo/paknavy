@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <record id="action_report_credit_sale" model="ir.actions.report">
+        <field name="name">Credit Sale Report</field>
+        <field name="model">credit.sale.report.wizard</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">xbo_paknavy_pos_report.credit_sale_report_template</field>
+        <field name="report_file">xbo_paknavy_pos_report.credit_sale_report_template</field>
+        <field name="print_report_name">'Credit Sale Report'</field>
+    </record>
+
+    <template id="credit_sale_report_template">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+
+                    <h3 class="text-center" style="margin-bottom:15px;">
+                        <strong>Credit Sale Report</strong>
+                    </h3>
+
+                    <table style="width:100%; margin-bottom:15px;border:none;">
+                        <tr>
+                            <td style="text-align:left;border:none;">
+                                <strong>Date From:</strong>
+                                <span t-out="date_from.strftime('%d/%m/%Y')"/>
+                            </td>
+                            <td style="text-align:right;">
+                                <strong>Date To:</strong>
+                                <span t-out="date_to.strftime('%d/%m/%Y')"/>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <t t-if="not sections">
+                        <p class="text-center">No credit invoices found in this date range.</p>
+                    </t>
+
+                    <t t-foreach="sections" t-as="sec">
+
+                        <h5 style="margin-top:20px;">
+                            <strong>
+                                <span t-out="sec['config'].name"/>
+                            </strong>
+                        </h5>
+
+                        <table class="table table-sm table-bordered"
+                               style="width:100%; table-layout:fixed; border-collapse:collapse;">
+                            <thead>
+                                <tr style="background-color:#e9ecef;">
+                                    <th style="width:5%;" class="text-center">Sr No.</th>
+                                    <th style="width:16%;">Name</th>
+                                    <th style="width:12%;">Job Position</th>
+                                    <th style="width:12%;" class="text-end">Total Paid</th>
+                                    <th style="width:12%;" class="text-end">Amount Due</th>
+                                    <th style="width:19%;">Item</th>
+                                    <th style="width:12%;" class="text-end">Unit Price</th>
+                                    <th style="width:12%;" class="text-end">Total Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-foreach="sec['invoices']" t-as="inv">
+                                    <t t-set="move" t-value="inv['move']"/>
+                                    <t t-set="lines" t-value="inv['lines']"/>
+
+                                    <t t-foreach="lines" t-as="line">
+                                        <tr>
+                                            <t t-if="line_index == 0">
+                                                <td t-att-rowspan="len(lines)" class="text-center">
+                                                    <span t-out="inv['sr']"/>
+                                                </td>
+                                                <td t-att-rowspan="len(lines)">
+                                                    <span t-out="move.partner_id.name"/>
+                                                </td>
+                                                <td t-att-rowspan="len(lines)">
+                                                    <span t-out="inv['job']"/>
+                                                </td>
+                                                <td t-att-rowspan="len(lines)" class="text-end">
+                                                    <span t-out="move.amount_total - move.amount_residual"
+                                                          t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/>
+                                                </td>
+                                                <td t-att-rowspan="len(lines)" class="text-end">
+                                                    <span t-out="move.amount_residual"
+                                                          t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/>
+                                                </td>
+                                            </t>
+                                            <td style="text-align:left; padding-left:6px; vertical-align:middle;">
+                                                <span t-out="line.product_id.display_name or line.name"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-out="line.price_unit"
+                                                      t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/>
+                                            </td>
+                                            <td class="text-end">
+                                                <span t-out="line.price_total"
+                                                      t-options="{'widget': 'monetary', 'display_currency': move.currency_id}"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+
+                                <tr style="font-weight:bold; background-color:#dee2e6;">
+                                    <td colspan="7" class="text-start">Total (<span t-out="sec['config'].name"/>)
+                                    </td>
+                                    <td class="text-end">
+                                        <span t-out="sec['total']"
+                                              t-options="{'widget': 'monetary', 'display_currency': env.company.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+</odoo>
